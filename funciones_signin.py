@@ -1,6 +1,7 @@
 import hashlib
 import csv
 import os
+#from tkinter import N
 
 def useNewUser(setUser):
   with open('data.csv', 'a') as db:
@@ -31,9 +32,11 @@ def signin(username, password):
     ).hex()
 
   if code == newone:
-    return 'Ingreso exitoso'
+    print('Ingreso exitoso')
+    return True
   else:
-    return 'Usuario o contraseña incorrecta, intentelo nuevamente'
+    print('Usuario o contraseña incorrecta, intentelo nuevamente')
+    return False
 
 def signup(username, password):
   salt = os.urandom(32)
@@ -65,6 +68,8 @@ def numEnt():
 
 salir = False
 opcion = 0
+peli_niños = ['despicable me', 'toy story', 'cars', 'monsters inc', 'turning red']
+peli_adultos = ['Duro de matar', 'the girl with the dragon tattoo', 'son como niños', 'billy', 'leon the professional']
 
 while (salir != True):
   print("Bienvenido al menu :")
@@ -79,14 +84,33 @@ while (salir != True):
 
     username = input('Nombre de usuario: ')
     password = input('Contraseña: ')
-    print(signup(username, password))
+    print(signup(username, password),'\n')
   
   elif opcion == 2:
     print('\nLog in\n')
 
     username = input('Nombre de usuario: ')
     password = input('Contraseña: ')
-    print(signin(username, password))
+    #print(signin(username, password))
+    registro_correcto = signin(username, password)
+    if registro_correcto == True:
+      print('Perfil 1: adulto, perfil 2: niño')
+      num = int(input("Ingrese el número del perfil a utilizar: "))
+      if num == 1:
+        print('Ha ingresado al perfil de adultos')
+        print('\n Peliculas: \n')
+        print(*peli_adultos, sep ='\n')
+        print('Seleccione la pelicula que desea ver: ')
+        salir = True
+      elif num == 2:
+        print('Ha ingresado al perfil de niños')
+        print('\n Peliculas: \n')
+        print(*peli_niños, sep ='\n')
+        print('Seleccione la pelicula que desea ver: ')
+        salir = True
+      else:
+        print('Ingrese un numero valido')
+
 
   elif opcion == 3:
     print('\nGracias por utilizar nuestro servicio\n')
