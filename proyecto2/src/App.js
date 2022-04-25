@@ -18,7 +18,6 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Search from "./pages/Search";
-import VetView from "./pages/Vetview";
 import Register from "./pages/Register"
 import HeaderComponent from "./pages/HeaderComponent";
 

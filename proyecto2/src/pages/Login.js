@@ -5,6 +5,7 @@ import md5 from "md5";
 import './register.css'
 
 
+
 const Login = () => {
 
     const [correo, setCorreo] = useState('')
@@ -43,9 +44,8 @@ const Login = () => {
                     
                 }else{
                     alert("Bienvenido")
-                   
-
-
+                    window.open('/Search')
+                    
                 }
             }else{
                 alert("Error con la solicitud")

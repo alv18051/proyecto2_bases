@@ -52,10 +52,29 @@ app.get("/get_peliculas", (req, res) => {
     })
 })
 
-app.post("/get_peliculasActor", (req, res) => {
-    console.log("verificar usuarios")
+app.post("/get_peliculasNombre", (req, res) => {
+    console.log("peliculas por nombre")
     const sql = `
-        SELECT * FROM contenido WHERE tipo LIKE 1
+        SELECT nombre, link , img, tipo o FROM contenido 
+        WHERE tipo LIKE '1' AND nombre ILKE '${req.body.nombre}'
+        
+    
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row)   console.log(row.rows)
+       
+        (row) ? res.json({success: true, data:row.rows, exist: row.rows.length}) : res.json({success: false})
+        
+    })
+})
+
+app.post("/get_peliculasActor", (req, res) => {
+    console.log("peliculas por actor")
+    const sql = `
+        SELECT nombre, link , img, tipo o FROM contenido 
+        INNER JOIN actorestrella ON actorestrella.actorid = contenido.actorestrella
+        WHERE tipo LIKE '1' AND contenido.actorestrella LIKE'${req.body.actorestrella}' 
         
     
     `
@@ -111,6 +130,30 @@ app.post("/verify", (req, res) => {
         
     })
 })
+
+app.post('/evit_repeat_user', (req, res) => {
+    console.log("\nVerificar que no se repita el user_name")
+
+    const sql = "SELECT user_name FROM usuario WHERE user_name = '"+ req.body.user_name +"';"
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        if(row){                        
+            res.json({ success: true, exist: row.rows.length})
+        }
+        else{
+            console.log("Error: " + err)
+            res.json({ success: false })
+        }        
+    })
+ })
+
+/*
+-------------------------------------------------------------------------------------------------
+Funciones de admin
+-------------------------------------------------------------------------------------------------
+*/
+
+
 
 
 

@@ -16,6 +16,63 @@ const Register = () => {
     const [tarjeta, setTarjeta] = useState('')
     const [ccv, setCcv] = useState('')
 
+    const handleRegister = (userid, correo, user_name, contrasena,planid,tarjeta,ccv,nombretitular ) => {
+        
+        fetch("http://127.0.0.1:8090/evit_repeat_user", {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                user_name: user_name,
+            })
+        })
+        .then(response => response.json())
+        .then(result => {        
+            if(result.success){
+                if(result.exist === 0){
+                    fetch("http://127.0.0.1:8090/add_user", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type' : 'application/json'
+                        },
+                        body: JSON.stringify({
+                            userid: userid,
+                            user_name: user_name,
+                            correo: correo,
+                            contrasena: md5(contrasena),
+                            planid: planid,
+                            tarjeta:tarjeta,
+                            ccv:ccv,
+                            nombretitular: nombretitular
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        if(result.success){
+                            alert("Se agrego el user")
+                        }else{
+                            alert("Error con la solicitud")
+                        }
+                    })
+                    .catch(error => {
+                        alert("Ocurrio un error inesperado: " + error)
+                    })
+                }
+                else{
+                    alert("Nombre de usuario no valido, porfavor ingrese otro nombre de usuario")
+                }
+            }
+            else{
+                alert("Ocurrio un error inesperado")
+            }
+        })
+        .catch(error => {
+            console.log("ERROR :(" + error)
+        })        
+
+    }
+
     const handleAddUser = (userid, correo, user_name, contrasena,planid,tarjeta,ccv,nombretitular ) => {
         fetch("http://127.0.0.1:8090/add_user", {
             method: 'POST',
@@ -46,14 +103,14 @@ const Register = () => {
         })
     }
 
-    let idUser = 3;
+    let idUser = 4;
 
     const handleSubmit = event => {
         event.preventDefault();
         if(contra1 === contra2){
             alert(`user: ${user} & corre: ${correo} & planid: ${perfil} 
                 & contraseña: ${contra1} & tarjeta: ${tarjeta} & ccv: ${ccv} `);
-            handleAddUser(idUser,correo,user,contra1,perfil,tarjeta,ccv,nombre);
+            handleRegister(idUser,correo,user,contra1,perfil,tarjeta,ccv,nombre);
 
         }else{
             alert('no coinciden las contraseñas, vuelva a intentarlo')

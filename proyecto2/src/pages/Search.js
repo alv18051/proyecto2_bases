@@ -66,10 +66,10 @@
             <FormControl>
                 <label>Nombre del actor</label>
                   <Select placeholder={'-Actor'} focusBorderColor={'rgb(174 213 142)'} onChange ={event => setActor(event.currentTarget.value)}>
-                    <option value='Leonardo di Caprio'>Leonardo di Caprio</option>
-                    <option value='option2'>actor2</option>
-                    <option value='option3'>actor3</option>
-                    <option value='option4'>actor4</option>
+                    <option value='1'>Leonardo di Caprio</option>
+                    <option value='2'>actor2</option>
+                    <option value='3'>actor3</option>
+                    <option value='4'>actor4</option>
                     <option></option>
                   </Select>
               </FormControl>
@@ -167,6 +167,10 @@
           </div>
 
           <div className='CardsContainer'>
+
+          {peliculas.map((peliculas)=>
+             <CardComponent title={peliculas.nombre} link={peliculas.link} image = {peliculas.img}/>
+            )}
          
             
           
