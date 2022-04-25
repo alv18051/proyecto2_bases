@@ -31,7 +31,6 @@ function App() {
   return (
     <Routes>
     <Route path='/' element={<> <Main/>  </>}></Route>
-    <Route path='/search' element={<> <HeaderComponent/> <Search/>  </>}></Route>
     <Route path='/login' element={<> <Login/>  </>}></Route>
     <Route path='/register' element={<>  <Register/>  </>}></Route>
   </Routes>

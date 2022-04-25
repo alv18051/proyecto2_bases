@@ -20,12 +20,8 @@ import { Link, useNavigate } from "react-router-dom";
          <ul className="header-right">  
          <li className="option active btn">
             <Link to={"/Register"}>Registrarse</Link>
-           </li>   
-
-        <li className="option btn">
-            <Link to={"/search"}>Buscar</Link>
-        </li>
-
+           </li>  
+           
         <li className="option btn">
             <Link to={"/login"}>Iniciar sesión</Link>
         </li>
