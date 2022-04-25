@@ -34,19 +34,109 @@
 
   const [peliculas, setPeliculas] = useState([])
   const [actor, setActor] = useState('')
-  const [premio, setPremio] = useState('')
-  const [genero, setGenero] = useState('')
+  const [link, setLink] = useState('')
+  const [img, setImg] = useState('')
+  const [director, setDirector] = useState('')
+  const [categoria, setCategoria] = useState('')
   const [nombre, setNombre] = useState('')
 
   const getNombre = (name) => {
         setNombre(name)
     }
 
+    const getActor = (actor) => {
+      setActor(actor)
+  }
+
+  const getLink = (link) => {
+      setLink(link)
+  }
+  const getImg = (img) => {
+    setImg(img)
+}
+
+const getDirector = (director) => {
+  setDirector(director)
+}
+
+const getCategoria = (categoria) => {
+  setCategoria(categoria)
+}
+const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) => {
+ fetch("http://127.0.0.1:8090/add_new_movie", {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                nombre: nombre,
+                categoria:categoria,
+                director: director,
+                actorestrella: actorestrella,
+                link: link,
+                img:img
+            })
+        })
+        .then(response => response.json())
+        .then(result => {
+            if(result.success){
+                alert("Se agrego la pelicula, puede refrescar la pagina para ver los cambios")
+            }else{
+                alert("Error con la solicitud")
+            }
+        })
+        .catch(error => {
+            alert("Ocurrio un error inesperado: " + error)
+        })
+    }
+
+  const handleDeleteMovie = (nombre) =>{
+    fetch("http://127.0.0.1:8090/delete_movie", {
+            method: 'POST',
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                nombre: nombre,
+                
+            })
+        })
+        .then(response => response.json())
+        .then(result => {
+            if(result.success){
+                alert("Se elimino la pelicula")
+            }else{
+                alert("Error con la solicitud")
+            }
+        })
+        .catch(error => {
+            alert("Ocurrio un error inesperado: " + error)
+        })
+    
+  }
+
+
 
     const target = event => {
       //alert(`Cercania: ${Cercania} & Especialidad: ${Emergencia} & Tarifas: ${Tarifas} 
       //& Rating: ${Rating} & Cantidad: ${Cantidad} `);
       alert(posts)
+      event.preventDefault();
+    }
+
+    const add = event => {
+      //alert(`Cercania: ${Cercania} & Especialidad: ${Emergencia} & Tarifas: ${Tarifas} 
+      //& Rating: ${Rating} & Cantidad: ${Cantidad} `);
+      handleAddMovie(nombre, categoria, director, actor, link, img)
+      
+      event.preventDefault();
+    }
+
+    const eliminar = event => {
+      //alert(`Cercania: ${Cercania} & Especialidad: ${Emergencia} & Tarifas: ${Tarifas} 
+      //& Rating: ${Rating} & Cantidad: ${Cantidad} `);
+      handleDeleteMovie(nombre)
+      
       event.preventDefault();
     }
    
@@ -60,48 +150,12 @@
               <Heading className='title'>Filtros</Heading>
             </div>
             
-            <form onSubmit={target} >
-
-            
-          
-
-            <div className='SearchOuterContainer2'>
-
-            <FormControl>
-                <label>Nombre del actor</label>
-                  <Select placeholder={'-Actor'} focusBorderColor={'rgb(174 213 142)'} onChange ={event => setActor(event.currentTarget.value)}>
-                    <option value='1'>Leonardo di Caprio</option>
-                    <option value='2'>actor2</option>
-                    <option value='3'>actor3</option>
-                    <option value='4'>actor4</option>
-                    <option></option>
-                  </Select>
-              </FormControl>
-            <Button type='submit' 
-              backgroundColor='#400da0'
-              _hover='rgb(174 213 142)'
-              _active={{bg:'rgb(174 213 142)', borderColor:'rgb(174, 213, 142)'}}
-              color='#fff'
-              width='100%'
-              marginTop='10px'   
-            >Buscar por actor</Button>
-            </div>
-            </form>
-            <form onSubmit={target}>
+            <form onSubmit={eliminar} >
             
             <div className='SearchOuterContainer2'>
-            
 
-            <FormControl>
-                <label>Nombre del genero</label>
-                  <Select placeholder={'-Genero'} focusBorderColor={'rgb(75, 11, 134)'} onChange ={event => setGenero(event.currentTarget.value)}>
-                    <option value='accion'>accion</option>
-                    <option value='comedia'>comedia</option>
-                    <option value='romance'>romance</option>
-                    <option value='documental'>documental</option>
-                    <option></option>
-                  </Select>
-              </FormControl>
+            <InputComponent getter = {getNombre} title='Eliminar pelicula'  message='Ingresa el nombre de la pelicula que desea eliminar' />
+                
             <Button type='submit' 
               backgroundColor='#400da0'
               _hover='rgb(174 213 142)'
@@ -109,21 +163,22 @@
               color='#fff'
               width='100%'
               marginTop='10px'   
-            >Buscar por genero</Button>
+            >Eliminar</Button>
             </div>
-            </form>
+          </form>
 
-            <form onSubmit={target}>
+          
+          <form onSubmit={add}>
           <div className='SearchOuterContainer2'>
 
-            <FormControl>
-                <label>Nombre del premio</label>
-                  <Select placeholder={'-Premio'} focusBorderColor={'rgb(75, 11, 134)'} onChange ={event => setPremio(event.currentTarget.value)}>
-                    <option value='oscar'>Oscar</option>
-                    <option value='globo de oro'>Globo de oro</option>
-                    <option></option>
-                  </Select>
-              </FormControl>
+          <InputComponent getter = {getNombre} title='Ingresar pelicula'  message='Ingresa el nombre de la pelicula' />
+          <InputComponent getter = {getActor} title=''  message='Ingresa el id del actor estrella' />
+          <InputComponent getter = {getDirector} title=''  message='Ingresa el id del director' />
+          <InputComponent getter = {getCategoria} title=''  message='Ingresa el id de la categoria' />
+          <InputComponent getter = {getLink} title=''  message='Ingresa el link' />
+          <InputComponent getter = {getImg} title=''  message='Ingresa el link de la imagen' />
+
+            
             <Button type='submit' 
               backgroundColor='#400da0'
               _hover='rgb(174 213 142)'
@@ -131,9 +186,11 @@
               color='#fff'
               width='100%'
               marginTop='10px'   
-            >Buscar por premio</Button>
+            >Añadir</Button>
             </div>
             </form>
+
+
             <form onSubmit={target}>
             <div className='SearchOuterContainer2'>
             <InputComponent getter = {getNombre} title='Nombre de la pelicula'  message='Ingresa el nombre de la pelicula' />
@@ -149,15 +206,13 @@
             
 
             </form>
-
-            <p className='questionCont'>¿Cambiar a series? <a href='./SearchSerie'> <b className='highlight'>Cambiar</b></a></p>
           </div>
         </div>
 
         <div className='SearchOuterContainer3 container'>
           <div className='SearchInfoContainer'>
             <div className='titleContainer'>
-              <Heading className='title'>Peliculas</Heading>
+              <Heading className='title'>peliculas</Heading>
             </div>
           </div>
           <div className='SearchGridContainer'>
@@ -165,10 +220,11 @@
           </div>
 
           <div className='CardsContainer'>
-            {/*<CardComponent title={post.nombre}  link={post.link} image={post.img}/>*/}
+            
             {
               posts.map(post => {
                 return(
+                  
                   //<CardComponent className='box' key={post.idcontenido}
                   <div key={post.idcontenido}>
                     <CardComponent title={post.nombre}  link={post.link} image={post.img}/>
@@ -178,6 +234,7 @@
                   
                   //title={post.nombre}  link={post.link} image={post.img}>
                   //</CardComponent> 
+                  
                 )
               })
             
@@ -185,8 +242,7 @@
             }
             
             
-            {/*<CardComponent title={x[0].nombre}  link={x[0].link} image={x[0].img}/>*/}
-            {/*<CardComponent title={x[1].nombre}  link={x[1].link} image={x[1].img}/>*/}
+            
 
           </div>
 

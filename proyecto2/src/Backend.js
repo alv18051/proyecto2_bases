@@ -165,6 +165,35 @@ Funciones de admin
 -------------------------------------------------------------------------------------------------
 */
 
+app.post("/add_new_movie", (req, res) => {
+    console.log("\nagregar nueva pelicula")
+
+    const sql = `   
+        INSERT INTO contenido 
+        (tipo, nombre, categoria, director, actorestrella, link, img) 
+        VALUES ('1','${req.body.nombre}', '${req.body.categoria}', '${req.body.director}', '${req.body.actorestrella}', '${req.body.link}','${req.body.img}'
+        );
+        `;
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        (row) ? res.json({success: true}) : res.json({success: false, err: err})
+    })
+})
+
+app.post("/delete_movie", (req, res) => {
+    console.log("\borrar pelicula")
+
+    const nombre = req.body.nombre
+    
+    const sql = 
+        "DELETE FROM contenido WHERE nombre = " +  nombre + ";"
+    
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        (row) ? res.json({success: true}) : res.json({success: false, err: err})
+    })
+})
+
 
 
 

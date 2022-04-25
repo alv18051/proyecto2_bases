@@ -150,14 +150,14 @@
 
             </form>
 
-            <p className='questionCont'>¿Cambiar a series? <a href='./SearchSerie'> <b className='highlight'>Cambiar</b></a></p>
+            <p className='questionCont'>¿Cambiar a peliculas? <a href='./Search'> <b className='highlight'>Cambiar</b></a></p>
           </div>
         </div>
 
         <div className='SearchOuterContainer3 container'>
           <div className='SearchInfoContainer'>
             <div className='titleContainer'>
-              <Heading className='title'>Peliculas</Heading>
+              <Heading className='title'>Series</Heading>
             </div>
           </div>
           <div className='SearchGridContainer'>

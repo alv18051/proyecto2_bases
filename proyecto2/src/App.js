@@ -19,6 +19,8 @@ import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Search from "./pages/Search";
 import Register from "./pages/Register"
+import Admin from "./pages/Admin"
+import SearchSerie from "./pages/SearchSerie";
 import HeaderComponent from "./pages/HeaderComponent";
 
 // ---------------------------------------------------------------------------------------
@@ -34,6 +36,8 @@ function App() {
     <Route path='/login' element={<> <Login/>  </>}></Route>
     <Route path='/register' element={<>  <Register/>  </>}></Route>
     <Route path='/Search' element={<>  <Search/>  </>}></Route>
+    <Route path='/Admin' element={<>  <Admin/>  </>}></Route>
+    <Route path='/SearchSerie' element={<>  <SearchSerie/>  </>}></Route>
   </Routes>
   );
 }
