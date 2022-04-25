@@ -131,6 +131,23 @@ app.post("/verify", (req, res) => {
     })
 })
 
+app.post("/verifyAdmin", (req, res) => {
+    console.log("verificar admin")
+    const sql = `
+        SELECT user_name, contrasena FROM usuario
+        WHERE user_name LIKE '${req.body.user_name}' AND contrasena LIKE '${req.body.contrasena}' AND user_name IS NOT NULL AND contrasena IS NOT NULL AND planid = '4';  
+        
+    
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row)   console.log(row.rows)
+       
+        (row) ? res.json({success: true, data:row.rows, exist: row.rows.length}) : res.json({success: false})
+        
+    })
+})
+
 app.post('/evit_repeat_user', (req, res) => {
     console.log("\nVerificar que no se repita el user_name")
 
@@ -172,6 +189,21 @@ app.post("/add_new_movie", (req, res) => {
         INSERT INTO contenido 
         (tipo, nombre, categoria, director, actorestrella, link, img) 
         VALUES ('1','${req.body.nombre}', '${req.body.categoria}', '${req.body.director}', '${req.body.actorestrella}', '${req.body.link}','${req.body.img}'
+        );
+        `;
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        (row) ? res.json({success: true}) : res.json({success: false, err: err})
+    })
+})
+
+app.post("/add_new_serie", (req, res) => {
+    console.log("\nagregar nueva serie")
+
+    const sql = `   
+        INSERT INTO contenido 
+        (tipo, nombre, categoria, director, actorestrella, link, img) 
+        VALUES ('2','${req.body.nombre}', '${req.body.categoria}', '${req.body.director}', '${req.body.actorestrella}', '${req.body.link}','${req.body.img}'
         );
         `;
     console.log(sql)

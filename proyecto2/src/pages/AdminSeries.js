@@ -63,7 +63,7 @@ const getCategoria = (categoria) => {
   setCategoria(categoria)
 }
 const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) => {
- fetch("http://127.0.0.1:8090/add_new_movie", {
+ fetch("http://127.0.0.1:8090/add_new_serie", {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
@@ -154,7 +154,7 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
             
             <div className='SearchOuterContainer2'>
 
-            <InputComponent getter = {getNombre} title='Eliminar pelicula'  message='Ingresa el nombre de la pelicula que desea eliminar' />
+            <InputComponent getter = {getNombre} title='Eliminar Serie'  message='Ingresa el nombre de la serie que desea eliminar' />
                 
             <Button type='submit' 
               backgroundColor='#400da0'
@@ -171,7 +171,7 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
           <form onSubmit={add}>
           <div className='SearchOuterContainer2'>
 
-          <InputComponent getter = {getNombre} title='Ingresar pelicula'  message='Ingresa el nombre de la pelicula' />
+          <InputComponent getter = {getNombre} title='Ingresar serie'  message='Ingresa el nombre de la serie' />
           <InputComponent getter = {getActor} title=''  message='Ingresa el id del actor estrella' />
           <InputComponent getter = {getDirector} title=''  message='Ingresa el id del director' />
           <InputComponent getter = {getCategoria} title=''  message='Ingresa el id de la categoria' />
@@ -206,14 +206,14 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
             
 
             </form>
-            <p className='questionCont'>¿Cambiar a series? <a href='./AdminSeries'> <b className='highlight'>Cambiar</b></a></p>
+            <p className='questionCont'>¿Cambiar a peliculas? <a href='./Admin'> <b className='highlight'>Cambiar</b></a></p>
           </div>
         </div>
 
         <div className='SearchOuterContainer3 container'>
           <div className='SearchInfoContainer'>
             <div className='titleContainer'>
-              <Heading className='title'>Peliculas</Heading>
+              <Heading className='title'>Series</Heading>
             </div>
           </div>
           <div className='SearchGridContainer'>

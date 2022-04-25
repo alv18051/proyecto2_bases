@@ -27,7 +27,7 @@ import { Link, useNavigate } from "react-router-dom";
         </li>
 
         <li className="search btn">
-            <Link to={"/Admin"}></Link>
+            <Link to={"/LoginAdmin"}></Link>
         </li>
 
          </ul>
