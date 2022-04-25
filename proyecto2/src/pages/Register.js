@@ -17,16 +17,17 @@ const Register = () => {
     const [tarjeta, setTarjeta] = useState('')
     const [ccv, setCcv] = useState('')
 
-    const handleAddUser = (correo, user_name, contraseña,planid,tarjeta,ccv,nombretitular ) => {
-        fetch("http://127.0.0.1:8000/add_user", {
+    const handleAddUser = (userid, correo, user_name, contrasena,planid,tarjeta,ccv,nombretitular ) => {
+        fetch("http://127.0.0.1:8090/add_user", {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
             },
             body: JSON.stringify({
+                userid: userid,
                 user_name: user_name,
-                email: correo,
-                contraseña: md5(contraseña.value),
+                correo: correo,
+                contrasena: contrasena,
                 planid: planid,
                 tarjeta:tarjeta,
                 ccv:ccv,
@@ -46,12 +47,14 @@ const Register = () => {
         })
     }
 
+    let idUser = 1;
+
     const handleSubmit = event => {
         event.preventDefault();
         if(contra1 === contra2){
             alert(`user: ${user} & corre: ${correo} & planid: ${perfil} 
                 & contraseña: ${contra1} & tarjeta: ${tarjeta} & ccv: ${ccv} `);
-            //handleAddUser(correo, user, contra1, perfil,tarjeta,ccv,nombre);
+            handleAddUser(2, correo, user, contra1, perfil,tarjeta,ccv,nombre);
 
         }else{
             alert('no coinciden las contraseñas, vuelva a intentarlo')
@@ -88,6 +91,8 @@ const Register = () => {
         setCcv(ccv)
     }
 
+  
+
   return (
     <div className='provisionalBackgorund'>
             <div className='outerContainer container' >
@@ -110,7 +115,7 @@ const Register = () => {
                                 <option value={3}>Mega Fan</option>
                             </Select>
                     </FormControl>
-                    <InputComponent getter = {getNombre} title='Nombre del titular'  message='Ingresa tu nombre' />
+                    <InputComponent getter = {getNombre} title='Nombre'  message='Ingresa tu nombre' />
                     <InputComponent getter = {getTarjeta} title='Tarjeta'  message='Ingresa tu tarjeta (ingresa 0 si eres usuario gratis)' />
                     <InputComponent getter = {getCcv} title='CCV'  message='Ingresa tu CCV (ingresa 0 si eres usuario gratis)' />
                     
