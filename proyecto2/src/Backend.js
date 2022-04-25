@@ -84,7 +84,7 @@ app.post("/add_user", (req, res) => {
 
     const sql = `
         INSERT INTO usuario( userid,correo,user_name, contrasena, planid, fechanacimiento, tarjeta, fechaexp, ccv, nombretitular)
-        VALUES('${req.body.userid}','${req.body.correo}','${req.body.user_name}', '${req.body.contrasena}','${req.body.planid}',1999-01-01, '${req.body.tarjeta}',2023-08-01,'${req.body.ccv}', '${req.body.nombretitular}' );
+        VALUES('${req.body.userid}','${req.body.correo}','${req.body.user_name}', '${req.body.contrasena}','${req.body.planid}','1999-01-01', '${req.body.tarjeta}','2023-08-01','${req.body.ccv}', '${req.body.nombretitular}' );
 
     `
     console.log(sql)
@@ -96,8 +96,8 @@ app.post("/add_user", (req, res) => {
 app.post("/verify", (req, res) => {
     console.log("verificar usuarios")
     const sql = `
-        SELECT user_name, contraseña FROM users
-        WHERE email ILIKE '${req.body.email}' AND contraseña ILIKE '${req.body.password}' AND email IS NOT NULL AND password IS NOT NULL;  
+        SELECT user_name, contrasena FROM usuario
+        WHERE user_name LIKE '${req.body.user_name}' AND contrasena LIKE '${req.body.contrasena}' AND user_name IS NOT NULL AND contrasena IS NOT NULL;  
         
     
     `

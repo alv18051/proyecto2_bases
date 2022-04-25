@@ -4,7 +4,6 @@ import { Heading, Button, FormControl, Select} from '@chakra-ui/react';
 import md5 from "md5";
 import './register.css';
 
-let user_type = 'vet';
 
 const Register = () => {
 
@@ -27,7 +26,7 @@ const Register = () => {
                 userid: userid,
                 user_name: user_name,
                 correo: correo,
-                contrasena: contrasena,
+                contrasena: md5(contrasena),
                 planid: planid,
                 tarjeta:tarjeta,
                 ccv:ccv,
@@ -47,14 +46,14 @@ const Register = () => {
         })
     }
 
-    let idUser = 1;
+    let idUser = 3;
 
     const handleSubmit = event => {
         event.preventDefault();
         if(contra1 === contra2){
             alert(`user: ${user} & corre: ${correo} & planid: ${perfil} 
                 & contraseña: ${contra1} & tarjeta: ${tarjeta} & ccv: ${ccv} `);
-            handleAddUser(2, correo, user, contra1, perfil,tarjeta,ccv,nombre);
+            handleAddUser(idUser,correo,user,contra1,perfil,tarjeta,ccv,nombre);
 
         }else{
             alert('no coinciden las contraseñas, vuelva a intentarlo')
@@ -77,10 +76,6 @@ const Register = () => {
     }
     const getContras = (contras) => {
         setContra2(contras)
-    }
-
-    const getPerfil = (perfil) => {
-        setPerfil(perfil)
     }
 
     const getTarjeta = (tarjeta) => {
@@ -109,7 +104,7 @@ const Register = () => {
                     <InputComponent getter = {getContras} title='Cofirmar contraseña' message='Confirma tu contraseña' />
                     <FormControl>
                         <label><b>Perfil</b></label>
-                            <Select placeholder={'Escoge tu perfil'} focusBorderColor={'rgb(174 213 142)'} onChange ={event => setPerfil(event.currentTarget.value)}>
+                            <Select placeholder={'Escoge tu perfil'} focusBorderColor={'rgb(75, 11, 134)'} onChange ={event => setPerfil(event.currentTarget.value)}>
                                 <option value= {1}>Casual</option>
                                 <option value={2}>Fan</option>
                                 <option value={3}>Mega Fan</option>
@@ -120,9 +115,9 @@ const Register = () => {
                     <InputComponent getter = {getCcv} title='CCV'  message='Ingresa tu CCV (ingresa 0 si eres usuario gratis)' />
                     
                     <Button
-                            backgroundColor='#ea9a64'
-                            _hover='rgb(174 213 142)'
-                            _active={{bg:'rgb(174 213 142)', borderColor:'rgb(174, 213, 142)'}}
+                            backgroundColor='#400da0'
+                            _hover='#ce84dd'
+                            _active={{bg:'rgb(75, 11, 134)', borderColor:'rgb(75, 11, 134)'}}
                             color='#fff'
                             type='submit' 
                             width='100%'

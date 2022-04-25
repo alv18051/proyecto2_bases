@@ -21,7 +21,7 @@ const InputComponent = ({ getter, title, message }) => {
   return (
     <div className='outerContainer2'>
       <FormLabel >{title}</FormLabel>
-      <Input onChange={handleChange} focusBorderColor={colors.verde} placeholder={message} />
+      <Input onChange={handleChange} focusBorderColor='rgb(75, 11, 134)' placeholder={message} />
     </div>
   )
 }
