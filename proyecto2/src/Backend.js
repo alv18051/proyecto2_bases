@@ -104,8 +104,8 @@ app.post("/add_user", (req, res) => {
     console.log("AGREGAR USER")
 
     const sql = `
-        INSERT INTO usuario( userid,correo,user_name, contrasena, planid, fechanacimiento, tarjeta, fechaexp, ccv, nombretitular)
-        VALUES('${req.body.userid}','${req.body.correo}','${req.body.user_name}', '${req.body.contrasena}','${req.body.planid}','1999-01-01', '${req.body.tarjeta}','2023-08-01','${req.body.ccv}', '${req.body.nombretitular}' );
+        INSERT INTO usuario( correo,user_name, contrasena, planid, fechanacimiento, tarjeta, fechaexp, ccv, nombretitular)
+        VALUES('${req.body.correo}','${req.body.user_name}', '${req.body.contrasena}','${req.body.planid}','1999-01-01', '${req.body.tarjeta}','2023-08-01','${req.body.ccv}', '${req.body.nombretitular}' );
 
     `
     console.log(sql)
@@ -146,6 +146,18 @@ app.post('/evit_repeat_user', (req, res) => {
         }        
     })
  })
+
+ app.get("/start_search", (req, res) => {
+    //console.log("\nPELICULAS Y SERIES")
+    const sql = `
+        SELECT idcontenido, nombre, link, img FROM contenido  
+        `
+    //console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row.rowCount)
+        res.json(row.rows)
+    })
+})
 
 /*
 -------------------------------------------------------------------------------------------------

@@ -21,9 +21,13 @@ import { Link, useNavigate } from "react-router-dom";
          <li className="option active btn">
             <Link to={"/Register"}>Registrarse</Link>
            </li>  
-           
+
         <li className="option btn">
             <Link to={"/login"}>Iniciar sesión</Link>
+        </li>
+
+        <li className="search btn">
+            <Link to={"admin"}></Link>
         </li>
 
          </ul>

@@ -1,12 +1,12 @@
 :root{
-    --fondo: rgb(223 225 225);
-    --verde: rgb(174 213 142);
+    --fondo: rgb(137, 17, 218);
+    --verde: rgb(75, 11, 134);
     --white: rgb(181 142 213);
-    --naranja: #ea9a64;
-    --verde2: #97db75;
-    --verde3: #ace291;
-    --verde4: #b6e69e;
-    --gradient: linear-gradient(150deg, #97db75 0%, #b6e69e 100%);
+    --naranja: #400da0;
+    --verde2: #590869;
+    --verde3: #6f08c4;
+    --verde4: #ce84dd;
+    --gradient: linear-gradient(150deg, #860dac 0%, #af3ff0 100%);
     --blanco: #fff;
 }
 

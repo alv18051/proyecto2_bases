@@ -6,7 +6,7 @@
  * Javier Alvarez
  #######################################################################################*/
 
- import React, { useState } from 'react';
+ import React, { useState, useEffect, Component } from 'react';
  import OptionComponent from './OptionComponent'
  import CardComponent from './CardComponent'
  import InputComponent from './InputComponent'
@@ -14,8 +14,24 @@
  import './search.css'
 
 
- 
+
  function Search({onCurrentPage}) {
+
+  const [posts, setPosts] = useState([]);
+
+  React.useEffect(() => {
+    getData(setPosts)
+  }, [])
+
+  const getData = (setPosts) => {
+    fetch('http://127.0.0.1:8090/start_search')
+      .then(response => response.json())
+      .then(data => {
+        setPosts(data)
+      })
+      }
+  getData();
+
   const [peliculas, setPeliculas] = useState([])
   const [actor, setActor] = useState('')
   const [premio, setPremio] = useState('')
@@ -25,41 +41,29 @@
   const getNombre = (name) => {
         setNombre(name)
     }
-  
-  
-   
-  const  handleAdd= () => {
-    fetch("http://127.0.0.1:8090/get_peliculas")
-    .then(response => response.json)
-    .then(result =>{
-      console.log(result.data);
-      setPeliculas(result.data)
 
-    })
-    .catch(error => {
-         alert("Ocurrio un error inesperado: " + error)
-    })
-  }  
-  
 
-  handleAdd();
-
-      const target = event => {
-      
-        event.preventDefault();
-        handleAdd();
-
-        };
+    const target = event => {
+      //alert(`Cercania: ${Cercania} & Especialidad: ${Emergencia} & Tarifas: ${Tarifas} 
+      //& Rating: ${Rating} & Cantidad: ${Cantidad} `);
+      alert(posts)
+      event.preventDefault();
+    }
    
      return (
+
       <div className='SearchBackgorund'>
+
         <div className='SearchOuterContainer container'>
           <div className='SearchInfoContainer'>
             <div className='titleContainer'>
               <Heading className='title'>Filtros</Heading>
             </div>
             
-            <form onSubmit={target}>
+            <form onSubmit={target} >
+
+            
+          
 
             <div className='SearchOuterContainer2'>
 
@@ -151,38 +155,37 @@
         <div className='SearchOuterContainer3 container'>
           <div className='SearchInfoContainer'>
             <div className='titleContainer'>
-              <Heading className='title'>Peliculas</Heading>
+              <Heading className='title'>peliculas</Heading>
             </div>
           </div>
           <div className='SearchGridContainer'>
-            <Input className='inputS' focusBorderColor='rgb(75, 11, 134)' placeholder='Ingrese el nombre de una veterinaria'/>
-            <Button className='buttonS'
-              backgroundColor='#ea9a64'
-              _hover='rgb(174 213 142)'
-              _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
-              color='#fff'
-              grid-column='8'
-              grid-row='1'
-            >	&#x1F50D; </Button>
+            
           </div>
 
           <div className='CardsContainer'>
+            {/*<CardComponent title={post.nombre}  link={post.link} image={post.img}/>*/}
+            {
+              posts.map(post => {
+                return(
+                  //<CardComponent className='box' key={post.idcontenido}
+                  <div key={post.idcontenido}>
+                    <CardComponent title={post.nombre}  link={post.link} image={post.img}/>
+                    
+                    
+                  </div>
+                  
+                  //title={post.nombre}  link={post.link} image={post.img}>
+                  //</CardComponent> 
+                )
+              })
+            
+            
+            }
+            
+            
+            {/*<CardComponent title={x[0].nombre}  link={x[0].link} image={x[0].img}/>*/}
+            {/*<CardComponent title={x[1].nombre}  link={x[1].link} image={x[1].img}/>*/}
 
-          {peliculas.map((peliculas)=>
-             <CardComponent title={peliculas.nombre} link={peliculas.link} image = {peliculas.img}/>
-            )}
-         
-            
-          
-            
-            <CardComponent title='Veterinaria El Rejo'  link='./Popup' image='https://pbs.twimg.com/media/EWH0kEZWsAAWwvI.jpg'/>
-            <CardComponent title='Veterinaria La Paz'  link='elpastor.html' image='https://pbs.twimg.com/media/EWH0kEZWsAAWwvI.jpg'/>
-            <CardComponent title='CEMIVET'  link='elpastor.html' image='https://pbs.twimg.com/media/EWH0kEZWsAAWwvI.jpg'/>
-            <CardComponent title='VETINSA'  link='elpastor.html' image='https://pbs.twimg.com/media/EWH0kEZWsAAWwvI.jpg'/>
-            <CardComponent title='Veterinaria El Pastor'  link='elpastor.html' image='https://pbs.twimg.com/media/EWH0kEZWsAAWwvI.jpg'/>
-            <CardComponent title='Veterinaria La Bendicion'  link='elpastor.html' image='https://pbs.twimg.com/media/EWH0kEZWsAAWwvI.jpg'/>
-            <CardComponent title='Veterinaria El Cerro'  link='elpastor.html' image='https://pbs.twimg.com/media/EWH0kEZWsAAWwvI.jpg'/>
-            <CardComponent title='DANA'  link='elpastor.html' image='https://pbs.twimg.com/media/EWH0kEZWsAAWwvI.jpg'/>
           </div>
 
         </div>
@@ -191,8 +194,10 @@
 
 
       </div>
-      )};
-   
+     );
+   }
+
+  
    
  export default Search;
    
