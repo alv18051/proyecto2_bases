@@ -17,11 +17,11 @@
  app.use(cors())
  
 const db = new Client({
-    host: "",
-    database: "",
-    user: "",
+    host: "ec2-3-229-252-6.compute-1.amazonaws.com",
+    database: "d2oahsu1323u6q",
+    user: "ajnkeybcwaeqmb",
     port: 5432,
-    password: "",
+    password: "e3668f80647ecc76901eed184548965557fa3f88ae5d7069f7f26a33a4996017",
      ssl: {
          rejectUnauthorized: false
      }
@@ -44,11 +44,27 @@ app.get("/get_peliculas", (req, res) => {
     console.log("\npeliculas")
 
     const sql = `
-        SELECT * FROM contenido WHERE tipo ILIKE '1';
+        SELECT * FROM contenido WHERE tipo LIKE '1';
         `
     console.log(sql)
     db.query(sql, (err, row) => {
         (row) ? res.json({success: true, data: row.rows }) : res.json({success: false, err: err})
+    })
+})
+
+app.post("/get_peliculasActor", (req, res) => {
+    console.log("verificar usuarios")
+    const sql = `
+        SELECT * FROM contenido WHERE tipo LIKE 1
+        
+    
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row)   console.log(row.rows)
+       
+        (row) ? res.json({success: true, data:row.rows, exist: row.rows.length}) : res.json({success: false})
+        
     })
 })
 
@@ -56,7 +72,7 @@ app.get("/get_series", (req, res) => {
     console.log("\nseries")
 
     const sql = `
-        SELECT * FROM contenido WHERE tipo ILIKE '2';
+        SELECT * FROM contenido WHERE tipo LIKE '2';
         `
     console.log(sql)
     db.query(sql, (err, row) => {
@@ -64,21 +80,7 @@ app.get("/get_series", (req, res) => {
     })
 })
 
-app.post("/sort_by_rating", (req, res) => {
-    console.log("rating")
-    const sql = `
-        SELECT name FROM vet
-        WHERE emergency LIKE '${req.body.emergency}' AND emergency IS NOT NULL  
-        `
-    
-    console.log(sql)
-    db.query(sql, (err, row) => {
-        //console.log(row)   console.log(row.rows)
 
-        (row) ? res.json({success: true, data:row.rows, exist: row.rows.length}) : res.json({success: false})
-
-    })
-})
 app.post("/add_user", (req, res) => {
     console.log("AGREGAR USER")
 
@@ -110,22 +112,7 @@ app.post("/verify", (req, res) => {
     })
 })
 
-app.post("/verify_vet", (req, res) => {
-    console.log("verificar veterinarios")
-    const sql = `
-        SELECT email, password FROM users
-        WHERE email ILIKE '${req.body.email}' AND password ILIKE '${req.body.password}'AND type_user LIKE 'vet' AND email IS NOT NULL AND password IS NOT NULL;  
-        
-    
-    `
-    console.log(sql)
-    db.query(sql, (err, row) => {
-        //console.log(row)   console.log(row.rows)
-       
-        (row) ? res.json({success: true, data:row.rows, exist: row.rows.length}) : res.json({success: false})
-        
-    })
-})
+
 
 
 

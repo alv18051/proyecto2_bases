@@ -9,6 +9,7 @@
  import React, { useState } from 'react';
  import OptionComponent from './OptionComponent'
  import CardComponent from './CardComponent'
+ import InputComponent from './InputComponent'
  import { Heading, Button, Input, FormControl, Select  } from '@chakra-ui/react';
  import './search.css'
 
@@ -16,35 +17,14 @@
  
  function Search({onCurrentPage}) {
   const [peliculas, setPeliculas] = useState([])
-  const [Cercania, setCercania] = useState('')
-  const [Emergencia, setEmergencia] = useState('')
-  const [Tarifas, setTarifas] = useState('')
-  const [Rating, setRating] = useState('')
-  const [Cantidad, setCantidad] = useState('')
-  
-  const getCercania = (Cercania) => {
-    setCercania(Cercania)
-  }
+  const [actor, setActor] = useState('')
+  const [premio, setPremio] = useState('')
+  const [genero, setGenero] = useState('')
+  const [nombre, setNombre] = useState('')
 
-const getEmergencia = (Emergencia) => {
-  setEmergencia(Emergencia)
-  }
-
-const getTarifas = (Tarifas) => {
-  setTarifas(Tarifas)
-  }
-
-const getRating = (Rating) => {
-  setRating(Rating)
-  }
-
-const getCantidad = (Cantidad) => {
-  setCantidad(Cantidad)
-  }
-
-const [value, setValue] = React.useState('')
-  
-
+  const getNombre = (name) => {
+        setNombre(name)
+    }
   
   
    
@@ -53,35 +33,23 @@ const [value, setValue] = React.useState('')
     .then(response => response.json)
     .then(result =>{
       console.log(result.data);
-      //setPeliculas(result.data)
+      setPeliculas(result.data)
 
     })
     .catch(error => {
          alert("Ocurrio un error inesperado: " + error)
     })
-  } 
-
-  const handleSubmit = event => {
-    event.preventDefault();
-    if(Emergencia === 'true'){
-      setEmergencia = true;
-    } else{
-      setEmergencia = false
-    }
+  }  
   
-
-  
-
-  };
 
   handleAdd();
 
-    const target = event => {
+      const target = event => {
       
-      event.preventDefault();
-      handleAdd();
+        event.preventDefault();
+        handleAdd();
 
-    }
+        };
    
      return (
       <div className='SearchBackgorund'>
@@ -94,20 +62,87 @@ const [value, setValue] = React.useState('')
             <form onSubmit={target}>
 
             <div className='SearchOuterContainer2'>
-              
-            </div>
 
-          
-          
+            <FormControl>
+                <label>Nombre del actor</label>
+                  <Select placeholder={'-Actor'} focusBorderColor={'rgb(174 213 142)'} onChange ={event => setActor(event.currentTarget.value)}>
+                    <option value='Leonardo di Caprio'>Leonardo di Caprio</option>
+                    <option value='option2'>actor2</option>
+                    <option value='option3'>actor3</option>
+                    <option value='option4'>actor4</option>
+                    <option></option>
+                  </Select>
+              </FormControl>
             <Button type='submit' 
-              backgroundColor='#ea9a64'
+              backgroundColor='#400da0'
               _hover='rgb(174 213 142)'
               _active={{bg:'rgb(174 213 142)', borderColor:'rgb(174, 213, 142)'}}
               color='#fff'
               width='100%'
               marginTop='10px'   
-            >Aplicar Filtros</Button>
-          
+            >Buscar por actor</Button>
+            </div>
+            </form>
+            <form onSubmit={target}>
+            
+            <div className='SearchOuterContainer2'>
+            
+
+            <FormControl>
+                <label>Nombre del genero</label>
+                  <Select placeholder={'-Genero'} focusBorderColor={'rgb(75, 11, 134)'} onChange ={event => setGenero(event.currentTarget.value)}>
+                    <option value='accion'>accion</option>
+                    <option value='comedia'>comedia</option>
+                    <option value='romance'>romance</option>
+                    <option value='documental'>documental</option>
+                    <option></option>
+                  </Select>
+              </FormControl>
+            <Button type='submit' 
+              backgroundColor='#400da0'
+              _hover='rgb(174 213 142)'
+              _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
+              color='#fff'
+              width='100%'
+              marginTop='10px'   
+            >Buscar por genero</Button>
+            </div>
+            </form>
+
+            <form onSubmit={target}>
+          <div className='SearchOuterContainer2'>
+
+            <FormControl>
+                <label>Nombre del premio</label>
+                  <Select placeholder={'-Premio'} focusBorderColor={'rgb(75, 11, 134)'} onChange ={event => setPremio(event.currentTarget.value)}>
+                    <option value='oscar'>Oscar</option>
+                    <option value='globo de oro'>Globo de oro</option>
+                    <option></option>
+                  </Select>
+              </FormControl>
+            <Button type='submit' 
+              backgroundColor='#400da0'
+              _hover='rgb(174 213 142)'
+              _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
+              color='#fff'
+              width='100%'
+              marginTop='10px'   
+            >Buscar por premio</Button>
+            </div>
+            </form>
+            <form onSubmit={target}>
+            <div className='SearchOuterContainer2'>
+            <InputComponent getter = {getNombre} title='Nombre de la pelicula'  message='Ingresa el nombre de la pelicula' />
+            <Button type='submit' 
+              backgroundColor='#400da0'
+              _hover='rgb(174 213 142)'
+              _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
+              color='#fff'
+              width='100%'
+              marginTop='10px'   
+            >Buscar por nombre</Button>
+            </div>
+            
 
             </form>
           </div>
@@ -116,15 +151,15 @@ const [value, setValue] = React.useState('')
         <div className='SearchOuterContainer3 container'>
           <div className='SearchInfoContainer'>
             <div className='titleContainer'>
-              <Heading className='title'>Busqueda de veterinarias</Heading>
+              <Heading className='title'>Peliculas</Heading>
             </div>
           </div>
           <div className='SearchGridContainer'>
-            <Input className='inputS' focusBorderColor='rgb(174 213 142)' placeholder='Ingrese el nombre de una veterinaria'/>
+            <Input className='inputS' focusBorderColor='rgb(75, 11, 134)' placeholder='Ingrese el nombre de una veterinaria'/>
             <Button className='buttonS'
               backgroundColor='#ea9a64'
               _hover='rgb(174 213 142)'
-              _active={{bg:'rgb(174 213 142)', borderColor:'rgb(174, 213, 142)'}}
+              _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
               color='#fff'
               grid-column='8'
               grid-row='1'
@@ -133,9 +168,7 @@ const [value, setValue] = React.useState('')
 
           <div className='CardsContainer'>
          
-            {peliculas.map((peliculas)=>
-             <CardComponent title={peliculas.nombre} link={peliculas.link} image = {peliculas.img}/>
-            )}
+            
           
             
             <CardComponent title='Veterinaria El Rejo'  link='./Popup' image='https://pbs.twimg.com/media/EWH0kEZWsAAWwvI.jpg'/>
@@ -154,8 +187,8 @@ const [value, setValue] = React.useState('')
 
 
       </div>
-     );
-   }
+      )};
+   
    
  export default Search;
    
