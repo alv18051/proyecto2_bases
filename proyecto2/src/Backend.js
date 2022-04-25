@@ -17,11 +17,11 @@
  app.use(cors())
  
 const db = new Client({
-    host: "ec2-3-229-252-6.compute-1.amazonaws.com",
-    database: "d2oahsu1323u6q",
-    user: "ajnkeybcwaeqmb",
+    host: "",
+    database: "",
+    user: "",
     port: 5432,
-    password: "e3668f80647ecc76901eed184548965557fa3f88ae5d7069f7f26a33a4996017",
+    password: "",
      ssl: {
          rejectUnauthorized: false
      }
