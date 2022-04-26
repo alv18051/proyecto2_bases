@@ -44,7 +44,7 @@ app.get("/get_peliculas", (req, res) => {
     console.log("\npeliculas")
 
     const sql = `
-        SELECT * FROM contenido WHERE tipo LIKE '1';
+        SELECT * FROM contenido WHERE tipo = '1';
         `
     console.log(sql)
     db.query(sql, (err, row) => {
@@ -56,7 +56,7 @@ app.post("/get_peliculasGenero", (req, res) => {
     console.log("peliculas por genero")
     const sql = `
         SELECT nombre, link , img, tipo o FROM contenido 
-        WHERE categoria = '1' AND tipo ILKE '${req.body.tipo}'
+        WHERE categoria = '2' AND tipo ILKE '${req.body.tipo}'
         
     
     `
@@ -73,7 +73,7 @@ app.post("/get_peliculasNombre", (req, res) => {
     console.log("peliculas por nombre")
     const sql = `
         SELECT nombre, link , img, tipo o FROM contenido 
-        WHERE categoria = '1' AND nombre ILKE '${req.body.nombre}'
+        WHERE categoria = '2' AND nombre ILKE '${req.body.nombre}'
         
     
     `
@@ -91,7 +91,7 @@ app.post("/get_peliculasActor", (req, res) => {
     const sql = `
         SELECT nombre, link , img, tipo o FROM contenido 
         INNER JOIN actorestrella ON actorestrella.actorid = contenido.actorestrella
-        WHERE categoria = '1' AND contenido.actorestrella LIKE'${req.body.actorestrella}' 
+        WHERE categoria = '2' AND contenido.actorestrella LIKE'${req.body.actorestrella}' 
         
     
     `
@@ -113,6 +113,58 @@ app.get("/get_series", (req, res) => {
     console.log(sql)
     db.query(sql, (err, row) => {
         (row) ? res.json({success: true, data: row.rows }) : res.json({success: false, err: err})
+    })
+})
+
+app.post("/get_seriesGenero", (req, res) => {
+    console.log("series por genero")
+    const sql = `
+        SELECT nombre, link , img, tipo o FROM contenido 
+        WHERE categoria = '1' AND tipo ILKE '${req.body.tipo}'
+        
+    
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row)   console.log(row.rows)
+       
+        (row) ? res.json({success: true, data:row.rows, exist: row.rows.length}) : res.json({success: false})
+        
+    })
+})
+
+app.post("/get_seriesNombre", (req, res) => {
+    console.log("series por nombre")
+    const sql = `
+        SELECT nombre, link , img, tipo o FROM contenido 
+        WHERE categoria = '1' AND nombre ILKE '${req.body.nombre}'
+        
+    
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row)   console.log(row.rows)
+       
+        (row) ? res.json({success: true, data:row.rows, exist: row.rows.length}) : res.json({success: false})
+        
+    })
+})
+
+app.post("/get_seriesActor", (req, res) => {
+    console.log("series por actor")
+    const sql = `
+        SELECT nombre, link , img, tipo o FROM contenido 
+        INNER JOIN actorestrella ON actorestrella.actorid = contenido.actorestrella
+        WHERE categoria = '1' AND contenido.actorestrella LIKE'${req.body.actorestrella}' 
+        
+    
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row)   console.log(row.rows)
+       
+        (row) ? res.json({success: true, data:row.rows, exist: row.rows.length}) : res.json({success: false})
+        
     })
 })
 
@@ -216,8 +268,8 @@ app.post("/add_new_movie", (req, res) => {
 
     const sql = `   
         INSERT INTO contenido 
-        (tipo, nombre, categoria, director, actorestrella, link, img) 
-        VALUES ('${req.body.tipo}','${req.body.nombre}', '2', '${req.body.director}', '${req.body.actorestrella}', '${req.body.link}','${req.body.img}'
+        (idcontenido, tipo, nombre, categoria, director, actorestrella, link, img) 
+        VALUES ('${req.body.idcontenido}','${req.body.tipo}','${req.body.nombre}', '2', '${req.body.director}', '${req.body.actorestrella}', '${req.body.link}','${req.body.img}'
         );
         `;
     console.log(sql)
@@ -247,13 +299,15 @@ app.post("/delete_movie", (req, res) => {
     const nombre = req.body.nombre
     
     const sql = 
-        "DELETE FROM contenido WHERE nombre = " +  nombre + ";"
+        "DELETE FROM contenido WHERE nombre ILIKE \'" +  nombre + "\';"
     
     console.log(sql)
     db.query(sql, (err, row) => {
         (row) ? res.json({success: true}) : res.json({success: false, err: err})
+        console.log(res.json)
     })
 })
+
 
 app.post("/delete_serie", (req, res) => {
     console.log("\borrar serie")

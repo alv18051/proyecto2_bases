@@ -39,6 +39,7 @@
   const [director, setDirector] = useState('')
   const [categoria, setCategoria] = useState('')
   const [nombre, setNombre] = useState('')
+  const [tipo, setTipo] = useState('')
 
   const getNombre = (name) => {
         setNombre(name)
@@ -55,6 +56,10 @@
     setImg(img)
 }
 
+const getTipo = (tipo) => {
+  setTipo(tipo)
+}
+
 const getDirector = (director) => {
   setDirector(director)
 }
@@ -62,13 +67,15 @@ const getDirector = (director) => {
 const getCategoria = (categoria) => {
   setCategoria(categoria)
 }
-const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) => {
+const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorestrella, link, img) => {
  fetch("http://127.0.0.1:8090/add_new_movie", {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
             },
             body: JSON.stringify({
+                idcontenido: idcontenido,
+                tipo: tipo,
                 nombre: nombre,
                 categoria:categoria,
                 director: director,
@@ -127,7 +134,8 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
     const add = event => {
       //alert(`Cercania: ${Cercania} & Especialidad: ${Emergencia} & Tarifas: ${Tarifas} 
       //& Rating: ${Rating} & Cantidad: ${Cantidad} `);
-      handleAddMovie(nombre, categoria, director, actor, link, img)
+      let id = 12;
+      handleAddMovie(id, tipo, nombre, categoria, director, actor, link, img)
       
       event.preventDefault();
     }
@@ -177,6 +185,7 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
           <InputComponent getter = {getCategoria} title=''  message='Ingresa el id de la categoria' />
           <InputComponent getter = {getLink} title=''  message='Ingresa el link' />
           <InputComponent getter = {getImg} title=''  message='Ingresa el link de la imagen' />
+          <InputComponent getter = {getTipo} title=''  message='Ingresa el id del genero' />
 
             
             <Button type='submit' 

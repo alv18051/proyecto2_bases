@@ -32,9 +32,8 @@
       }
   getData();
 
-  const [peliculas, setPeliculas] = useState([])
+ 
   const [actor, setActor] = useState('')
-  const [premio, setPremio] = useState('')
   const [genero, setGenero] = useState('')
   const [nombre, setNombre] = useState('')
 
