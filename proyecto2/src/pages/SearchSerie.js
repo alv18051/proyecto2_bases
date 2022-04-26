@@ -24,7 +24,7 @@
   }, [])
 
   const getData = (setPosts) => {
-    fetch('http://127.0.0.1:8090/start_search')
+    fetch('http://127.0.0.1:8090/start_searchS')
       .then(response => response.json())
       .then(data => {
         setPosts(data)
@@ -95,10 +95,10 @@
             <FormControl>
                 <label>Nombre del genero</label>
                   <Select placeholder={'-Genero'} focusBorderColor={'rgb(75, 11, 134)'} onChange ={event => setGenero(event.currentTarget.value)}>
-                    <option value='accion'>accion</option>
-                    <option value='comedia'>comedia</option>
-                    <option value='romance'>romance</option>
-                    <option value='documental'>documental</option>
+                    <option value='2'>accion</option>
+                    <option value='1'>comedia</option>
+                    <option value='3'>terror</option>
+                    <option value='4'>romance</option>
                     <option></option>
                   </Select>
               </FormControl>
@@ -114,29 +114,8 @@
             </form>
 
             <form onSubmit={target}>
-          <div className='SearchOuterContainer2'>
-
-            <FormControl>
-                <label>Nombre del premio</label>
-                  <Select placeholder={'-Premio'} focusBorderColor={'rgb(75, 11, 134)'} onChange ={event => setPremio(event.currentTarget.value)}>
-                    <option value='oscar'>Oscar</option>
-                    <option value='globo de oro'>Globo de oro</option>
-                    <option></option>
-                  </Select>
-              </FormControl>
-            <Button type='submit' 
-              backgroundColor='#400da0'
-              _hover='rgb(174 213 142)'
-              _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
-              color='#fff'
-              width='100%'
-              marginTop='10px'   
-            >Buscar por premio</Button>
-            </div>
-            </form>
-            <form onSubmit={target}>
             <div className='SearchOuterContainer2'>
-            <InputComponent getter = {getNombre} title='Nombre de la pelicula'  message='Ingresa el nombre de la pelicula' />
+            <InputComponent getter = {getNombre} title='Nombre de la serie'  message='Ingresa el nombre de la serie' />
             <Button type='submit' 
               backgroundColor='#400da0'
               _hover='rgb(174 213 142)'

@@ -24,7 +24,7 @@
   }, [])
 
   const getData = (setPosts) => {
-    fetch('http://127.0.0.1:8090/start_search')
+    fetch('http://127.0.0.1:8090/start_searchS')
       .then(response => response.json())
       .then(data => {
         setPosts(data)

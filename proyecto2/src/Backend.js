@@ -56,7 +56,7 @@ app.post("/get_peliculasNombre", (req, res) => {
     console.log("peliculas por nombre")
     const sql = `
         SELECT nombre, link , img, tipo o FROM contenido 
-        WHERE tipo LIKE '1' AND nombre ILKE '${req.body.nombre}'
+        WHERE categoria = '1' AND nombre ILKE '${req.body.nombre}'
         
     
     `
@@ -74,7 +74,7 @@ app.post("/get_peliculasActor", (req, res) => {
     const sql = `
         SELECT nombre, link , img, tipo o FROM contenido 
         INNER JOIN actorestrella ON actorestrella.actorid = contenido.actorestrella
-        WHERE tipo LIKE '1' AND contenido.actorestrella LIKE'${req.body.actorestrella}' 
+        WHERE categoria = '1' AND contenido.actorestrella LIKE'${req.body.actorestrella}' 
         
     
     `
@@ -91,7 +91,7 @@ app.get("/get_series", (req, res) => {
     console.log("\nseries")
 
     const sql = `
-        SELECT * FROM contenido WHERE tipo LIKE '2';
+        SELECT * FROM contenido WHERE categoria = '2';
         `
     console.log(sql)
     db.query(sql, (err, row) => {
@@ -167,7 +167,19 @@ app.post('/evit_repeat_user', (req, res) => {
  app.get("/start_search", (req, res) => {
     //console.log("\nPELICULAS Y SERIES")
     const sql = `
-        SELECT idcontenido, nombre, link, img FROM contenido  
+        SELECT idcontenido, nombre, link, img FROM contenido WHERE categoria = 2
+        `
+    //console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row.rowCount)
+        res.json(row.rows)
+    })
+})
+
+app.get("/start_searchS", (req, res) => {
+    //console.log("\nPELICULAS Y SERIES")
+    const sql = `
+        SELECT idcontenido, nombre, link, img FROM contenido  WHERE categoria = '1'
         `
     //console.log(sql)
     db.query(sql, (err, row) => {
@@ -188,7 +200,7 @@ app.post("/add_new_movie", (req, res) => {
     const sql = `   
         INSERT INTO contenido 
         (tipo, nombre, categoria, director, actorestrella, link, img) 
-        VALUES ('1','${req.body.nombre}', '${req.body.categoria}', '${req.body.director}', '${req.body.actorestrella}', '${req.body.link}','${req.body.img}'
+        VALUES ('${req.body.tipo}','${req.body.nombre}', '2', '${req.body.director}', '${req.body.actorestrella}', '${req.body.link}','${req.body.img}'
         );
         `;
     console.log(sql)
@@ -203,7 +215,7 @@ app.post("/add_new_serie", (req, res) => {
     const sql = `   
         INSERT INTO contenido 
         (tipo, nombre, categoria, director, actorestrella, link, img) 
-        VALUES ('2','${req.body.nombre}', '${req.body.categoria}', '${req.body.director}', '${req.body.actorestrella}', '${req.body.link}','${req.body.img}'
+        VALUES ('${req.body.tipo}','${req.body.nombre}', '1', '${req.body.director}', '${req.body.actorestrella}', '${req.body.link}','${req.body.img}'
         );
         `;
     console.log(sql)
