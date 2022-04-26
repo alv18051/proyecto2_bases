@@ -104,6 +104,41 @@ app.post("/get_peliculasActor", (req, res) => {
     })
 })
 
+
+app.get("/start_search", (req, res) => {
+    //console.log("\nPELICULAS Y SERIES")
+    const sql = `
+        SELECT idcontenido, nombre, link, img FROM contenido 
+        WHERE categoria=2 
+        `
+    //console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row.rowCount)
+        res.json(row.rows)
+    })
+})
+
+
+app.post("/actor_search", (req, res) => {
+    console.log("rating")
+    const sql = `
+        SELECT idcontenido, nombre, link, img FROM contenido
+        INNER JOIN actorestrella ON actorestrella.actorid = contenido.actorestrella
+        WHERE actorestrella.nombreactor ILIKE '%${req.body.actorestrella}%'  
+        `
+    //console.log(sql)
+    db.query(sql, (err, row) => {
+         
+        //console.log(row)   
+        console.log(row.rows)
+        //res.json(row.rows)
+
+        (row) ? res.json({success: true, data:row.rows, exist: row.rows.length}) : res.json({success: false})
+
+    })
+})
+
+
 app.get("/get_series", (req, res) => {
     console.log("\nseries")
 
