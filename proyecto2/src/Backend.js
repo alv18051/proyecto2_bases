@@ -52,6 +52,23 @@ app.get("/get_peliculas", (req, res) => {
     })
 })
 
+app.post("/get_peliculasGenero", (req, res) => {
+    console.log("peliculas por genero")
+    const sql = `
+        SELECT nombre, link , img, tipo o FROM contenido 
+        WHERE categoria = '1' AND tipo ILKE '${req.body.tipo}'
+        
+    
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row)   console.log(row.rows)
+       
+        (row) ? res.json({success: true, data:row.rows, exist: row.rows.length}) : res.json({success: false})
+        
+    })
+})
+
 app.post("/get_peliculasNombre", (req, res) => {
     console.log("peliculas por nombre")
     const sql = `
@@ -226,6 +243,20 @@ app.post("/add_new_serie", (req, res) => {
 
 app.post("/delete_movie", (req, res) => {
     console.log("\borrar pelicula")
+
+    const nombre = req.body.nombre
+    
+    const sql = 
+        "DELETE FROM contenido WHERE nombre = " +  nombre + ";"
+    
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        (row) ? res.json({success: true}) : res.json({success: false, err: err})
+    })
+})
+
+app.post("/delete_serie", (req, res) => {
+    console.log("\borrar serie")
 
     const nombre = req.body.nombre
     

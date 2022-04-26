@@ -71,10 +71,12 @@
                 <label>Nombre del actor</label>
                   <Select placeholder={'-Actor'} focusBorderColor={'rgb(174 213 142)'} onChange ={event => setActor(event.currentTarget.value)}>
                     <option value='1'>Leonardo di Caprio</option>
-                    <option value='2'>actor2</option>
-                    <option value='3'>actor3</option>
-                    <option value='4'>actor4</option>
-                    <option></option>
+                    <option value='2'>Al Pacino</option>
+                    <option value='3'>Sylvester Stallone</option>
+                    <option value='4'>Jim Carrey</option>
+                    <option value='5'>Adam Sandler</option>
+                    <option value='6'>Daniel Kaluuya</option>
+                    
                   </Select>
               </FormControl>
             <Button type='submit' 

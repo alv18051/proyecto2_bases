@@ -91,7 +91,7 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
     }
 
   const handleDeleteMovie = (nombre) =>{
-    fetch("http://127.0.0.1:8090/delete_movie", {
+    fetch("http://127.0.0.1:8090/delete_serie", {
             method: 'POST',
             headers: {
                 'Content-Type' : 'application/json'
