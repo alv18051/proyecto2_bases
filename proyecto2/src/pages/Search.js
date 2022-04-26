@@ -1,7 +1,6 @@
 /**#######################################################################################
  * Universidad del Valle de Guatemala
  * Departamento de Ciencias de la Computación
-
  * Diego Ruiz
  * Javier Alvarez
  #######################################################################################*/
@@ -19,6 +18,12 @@
 
   const [posts, setPosts] = useState([]);
 
+  const [peliculas, setPeliculas] = useState([])
+  const [actorestrella, setActor] = useState('')
+  const [premio, setPremio] = useState('')
+  const [genero, setGenero] = useState('')
+  const [nombre, setNombre] = useState('')
+
   React.useEffect(() => {
     getData(setPosts)
   }, [])
@@ -30,13 +35,43 @@
         setPosts(data)
       })
       }
-  getData();
+  //getData();
 
-  const [peliculas, setPeliculas] = useState([])
-  const [actor, setActor] = useState('')
-  const [premio, setPremio] = useState('')
-  const [genero, setGenero] = useState('')
-  const [nombre, setNombre] = useState('')
+
+  const handleActor= (actor) => {
+    fetch("http://127.0.0.1:8090/actor_search", {
+        method: 'POST',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+          actorestrella: actor
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+      setPosts(data)       
+    })
+    .catch(error => {
+        alert("Ocurrio un error inesperado: " + error)
+    })
+  } 
+
+  const getPeliculas = (peliculas) => {
+    setPeliculas(peliculas)
+  }
+
+  const getActor = (actor) => {
+    setActor(actor)
+  }
+
+  const getPremio = (premio) => {
+    setPremio(premio)
+  }
+
+  const getGenero = (genero) => {
+    setGenero(genero)
+  }
 
   const getNombre = (name) => {
         setNombre(name)
@@ -60,24 +95,12 @@
               <Heading className='title'>Filtros</Heading>
             </div>
             
-            <form onSubmit={target} >
-
-            
-          
+            <form onSubmit={handleActor} >
 
             <div className='SearchOuterContainer2'>
 
             <FormControl>
-                <label>Nombre del actor</label>
-                  <Select placeholder={'-Actor'} focusBorderColor={'rgb(174 213 142)'} onChange ={event => setActor(event.currentTarget.value)}>
-                    <option value='1'>Leonardo di Caprio</option>
-                    <option value='2'>Al Pacino</option>
-                    <option value='3'>Sylvester Stallone</option>
-                    <option value='4'>Jim Carrey</option>
-                    <option value='5'>Adam Sandler</option>
-                    <option value='6'>Daniel Kaluuya</option>
-                    
-                  </Select>
+                <InputComponent getter = {getActor} title='Nombre del actor'  message='Ingresa el nombre aqui' />
               </FormControl>
             <Button type='submit' 
               backgroundColor='#400da0'
@@ -86,7 +109,7 @@
               color='#fff'
               width='100%'
               marginTop='10px'   
-            >Buscar por actor</Button>
+            >Buscar por nombre de actor</Button>
             </div>
             </form>
             <form onSubmit={target}>
@@ -95,15 +118,8 @@
             
 
             <FormControl>
-                <label>Nombre del genero</label>
-                  <Select placeholder={'-Genero'} focusBorderColor={'rgb(75, 11, 134)'} onChange ={event => setGenero(event.currentTarget.value)}>
-                    <option value='2'>accion</option>
-                    <option value='1'>comedia</option>
-                    <option value='3'>romance</option>
-                    <option value='4'>terror</option>
-                    <option></option>
-                  </Select>
-              </FormControl>
+              <InputComponent getter = {getGenero} title='Nombre del genero'  message='Ingresa el nombre aqui' />
+            </FormControl>
             <Button type='submit' 
               backgroundColor='#400da0'
               _hover='rgb(174 213 142)'
@@ -115,6 +131,22 @@
             </div>
             </form>
 
+            <form onSubmit={target}>
+          <div className='SearchOuterContainer2'>
+
+            <FormControl>
+              <InputComponent getter = {getPremio} title='Nombre del premio'  message='Ingresa el nombre aqui' />
+            </FormControl>
+            <Button type='submit' 
+              backgroundColor='#400da0'
+              _hover='rgb(174 213 142)'
+              _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
+              color='#fff'
+              width='100%'
+              marginTop='10px'   
+            >Buscar por premio</Button>
+            </div>
+            </form>
             <form onSubmit={target}>
             <div className='SearchOuterContainer2'>
             <InputComponent getter = {getNombre} title='Nombre de la pelicula'  message='Ingresa el nombre de la pelicula' />
@@ -130,8 +162,6 @@
             
 
             </form>
-
-            <p className='questionCont'>¿Cambiar a series? <a href='./SearchSerie'> <b className='highlight'>Cambiar</b></a></p>
           </div>
         </div>
 
@@ -153,21 +183,10 @@
                   //<CardComponent className='box' key={post.idcontenido}
                   <div key={post.idcontenido}>
                     <CardComponent title={post.nombre}  link={post.link} image={post.img}/>
-                    
-                    
                   </div>
-                  
-                  //title={post.nombre}  link={post.link} image={post.img}>
-                  //</CardComponent> 
                 )
-              })
-            
-            
+              })            
             }
-            
-            
-            {/*<CardComponent title={x[0].nombre}  link={x[0].link} image={x[0].img}/>*/}
-            {/*<CardComponent title={x[1].nombre}  link={x[1].link} image={x[1].img}/>*/}
 
           </div>
 
