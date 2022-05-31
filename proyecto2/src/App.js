@@ -24,6 +24,7 @@ import SearchSerie from "./pages/SearchSerie";
 import LoginAdmin from "./pages/LoginAdmin";
 import AdminSeries from "./pages/AdminSeries"
 import HeaderComponent from "./pages/HeaderComponent";
+import RegisterAdmin from "./pages/RegisterAdmin";
 
 // ---------------------------------------------------------------------------------------
  
@@ -42,6 +43,7 @@ function App() {
     <Route path='/Admin' element={<>  <Admin/>  </>}></Route>
     <Route path='/AdminSeries' element={<>  <AdminSeries/>  </>}></Route>
     <Route path='/SearchSerie' element={<>  <SearchSerie/>  </>}></Route>
+    <Route path='/RegisterAdmin' element={<>  <RegisterAdmin/>  </>}></Route>
   </Routes>
   );
 }

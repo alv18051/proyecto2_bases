@@ -88,7 +88,7 @@ const Login = () => {
                             Aceptar
                     </Button>
                     </form>
-                    <p className='questionCont'>¿No tienes cuenta? <a href='/Register'><b className='highlight'>¡Registrate!</b></a></p>
+                    <p className='questionCont'>¿Regresar? <a href='/'> <b className='highlight'>Regresar</b></a></p>
                 </div>
                 <div className='innerContainer'>
                         

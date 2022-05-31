@@ -17,11 +17,11 @@
  app.use(cors())
  
 const db = new Client({
-    host: "ec2-3-229-252-6.compute-1.amazonaws.com",
-    database: "d2oahsu1323u6q",
-    user: "ajnkeybcwaeqmb",
+    host: "ec2-3-234-131-8.compute-1.amazonaws.com",
+    database: "dc0e1gmd8brd07",
+    user: "owivztahhwwpek",
     port: 5432,
-    password: "e3668f80647ecc76901eed184548965557fa3f88ae5d7069f7f26a33a4996017",
+    password: "9a2b2731c22be05736cc6c3cc16157efc4a4b963de2d1c9efa4c6db20230f701",
      ssl: {
          rejectUnauthorized: false
      }
@@ -317,6 +317,21 @@ app.post("/delete_serie", (req, res) => {
     const sql = 
         "DELETE FROM contenido WHERE nombre = " +  nombre + ";"
     
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        (row) ? res.json({success: true}) : res.json({success: false, err: err})
+    })
+})
+
+app.post("/simulacion", (req, res) => {
+    console.log("\nsimulacion")
+
+    const sql = `   
+        INSERT INTO visualizacion 
+        (tipo_de_contenido, id_contenido, tiempo_visto) 
+        VALUES ('${req.body.tipo_de_contenido}','${req.body.id_contenido}','${req.body.tiempo_visto}'
+        );
+        `;
     console.log(sql)
     db.query(sql, (err, row) => {
         (row) ? res.json({success: true}) : res.json({success: false, err: err})

@@ -90,6 +90,31 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
         })
     }
 
+    const handleSimulation = (tipo_de_contenido, id_contenido, tiempo_visto) => {
+      fetch("http://127.0.0.1:8090/simulacion", {
+                 method: 'POST',
+                 headers: {
+                     'Content-Type' : 'application/json'
+                 },
+                 body: JSON.stringify({
+                     tipo_de_contenido:tipo_de_contenido,
+                     id_contenido:id_contenido,
+                     tiempo_visto:tiempo_visto
+                 })
+             })
+             .then(response => response.json())
+             .then(result => {
+                 if(result.success){
+                     alert("Simulacion completada")
+                 }else{
+                     alert("Error con la solicitud")
+                 }
+             })
+             .catch(error => {
+                 alert("Ocurrio un error inesperado: " + error)
+             })
+         }
+
   const handleDeleteMovie = (nombre) =>{
     fetch("http://127.0.0.1:8090/delete_serie", {
             method: 'POST',
@@ -138,6 +163,24 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
       handleDeleteMovie(nombre)
       
       event.preventDefault();
+    }
+
+    const simulacion = event => {
+      let tiempo = 10;
+      let x = 0;
+      while (x < tiempo){
+
+        let tipo = (Math.floor(Math.random()*2)+1)
+        let id = (Math.floor(Math.random()*50)+1)
+        let time = (Math.floor(Math.random()*40)+1)
+        x = x + 1;
+
+        handleSimulation(tipo, id, time)
+      
+        event.preventDefault();
+
+      }
+      
     }
    
      return (
@@ -191,6 +234,21 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
             </form>
 
 
+            <form onSubmit={simulacion}>
+              <div className='SearchOuterContainer2'>
+                <Button type='submit' 
+                backgroundColor='#400da0'
+                _hover='rgb(174 213 142)'
+                _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
+                color='#fff'
+                width='100%'
+                marginTop='10px'   
+                >Simulación</Button>
+              </div>
+
+            </form>
+
+
             <form onSubmit={target}>
             <div className='SearchOuterContainer2'>
             <InputComponent getter = {getNombre} title='Nombre de la pelicula'  message='Ingresa el nombre de la pelicula' />
@@ -207,6 +265,7 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
 
             </form>
             <p className='questionCont'>¿Cambiar a peliculas? <a href='./Admin'> <b className='highlight'>Cambiar</b></a></p>
+            <p className='questionCont'>¿Registrar un usuario/admin? <a href='./RegisterAdmin'> <b className='highlight'>Cambiar</b></a></p>
           </div>
         </div>
 

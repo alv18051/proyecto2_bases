@@ -122,6 +122,31 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
     
   }
 
+  const handleSimulation = (tipo_de_contenido, id_contenido, tiempo_visto) => {
+    fetch("http://127.0.0.1:8090/simulacion", {
+               method: 'POST',
+               headers: {
+                   'Content-Type' : 'application/json'
+               },
+               body: JSON.stringify({
+                   tipo_de_contenido:tipo_de_contenido,
+                   id_contenido:id_contenido,
+                   tiempo_visto:tiempo_visto
+               })
+           })
+           .then(response => response.json())
+           .then(result => {
+               if(result.success){
+                   console.log("Simulacion completada")
+               }else{
+                   alert("Error con la solicitud")
+               }
+           })
+           .catch(error => {
+               alert("Ocurrio un error inesperado: " + error)
+           })
+       }
+
 
 
     const target = event => {
@@ -146,6 +171,24 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
       handleDeleteMovie(nombre)
       
       event.preventDefault();
+    }
+
+    const simulacion = event => {
+      let tiempo = 60;
+      let x = 0;
+      while (x < tiempo){
+
+        let tipo = (Math.floor(Math.random()*2)+1)
+        let id = (Math.floor(Math.random()*50)+1)
+        let time = (Math.floor(Math.random()*40)+1)
+        x = x + 1;
+
+        handleSimulation(tipo, id, time)
+      
+        event.preventDefault();
+
+      }
+      
     }
    
      return (
@@ -174,6 +217,20 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
             >Eliminar</Button>
             </div>
           </form>
+
+          <form onSubmit={simulacion}>
+              <div className='SearchOuterContainer2'>
+                <Button type='submit' 
+                backgroundColor='#400da0'
+                _hover='rgb(174 213 142)'
+                _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
+                color='#fff'
+                width='100%'
+                marginTop='10px'   
+                >Simulación</Button>
+              </div>
+
+            </form>
 
           
           <form onSubmit={add}>
@@ -216,6 +273,7 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
 
             </form>
             <p className='questionCont'>¿Cambiar a series? <a href='./AdminSeries'> <b className='highlight'>Cambiar</b></a></p>
+            <p className='questionCont'>¿Registrar un usuario/admin? <a href='./RegisterAdmin'> <b className='highlight'>Cambiar</b></a></p>
           </div>
         </div>
 
