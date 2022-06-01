@@ -328,8 +328,8 @@ app.post("/simulacion", (req, res) => {
 
     const sql = `   
         INSERT INTO visualizacion 
-        (tipo_de_contenido, id_contenido, tiempo_visto) 
-        VALUES ('${req.body.tipo_de_contenido}','${req.body.id_contenido}','${req.body.tiempo_visto}'
+        (tipo_de_contenido, id_contenido, tiempo_visto, id_usuario, hora_visto, dia_mes, mes ) 
+        VALUES ('${req.body.tipo_de_contenido}','${req.body.id_contenido}','${req.body.tiempo_visto}','${req.body.id_usuario}','${req.body.hora_visto}','${req.body.dia_mes}','${req.body.mes}'
         );
         `;
     console.log(sql)

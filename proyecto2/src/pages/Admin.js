@@ -122,7 +122,7 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
     
   }
 
-  const handleSimulation = (tipo_de_contenido, id_contenido, tiempo_visto) => {
+  const handleSimulation = (tipo_de_contenido, id_contenido, tiempo_visto, id_usuario, hora_visto, dia_mes, mes) => {
     fetch("http://127.0.0.1:8090/simulacion", {
                method: 'POST',
                headers: {
@@ -131,7 +131,11 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
                body: JSON.stringify({
                    tipo_de_contenido:tipo_de_contenido,
                    id_contenido:id_contenido,
-                   tiempo_visto:tiempo_visto
+                   tiempo_visto:tiempo_visto,
+                   id_usuario:id_usuario,
+                   hora_visto:hora_visto,
+                   dia_mes:dia_mes,
+                   mes:mes
                })
            })
            .then(response => response.json())
@@ -178,12 +182,17 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
       let x = 0;
       while (x < tiempo){
 
-        let tipo = (Math.floor(Math.random()*2)+1)
-        let id = (Math.floor(Math.random()*50)+1)
-        let time = (Math.floor(Math.random()*40)+1)
+        let tipo = (Math.floor(Math.random()*2)+1);
+        let id = (Math.floor(Math.random()*50)+1);
+        let time = (Math.floor(Math.random()*40)+1);
+        let user = (Math.floor(Math.random()*50)+1);
+        let hora = (Math.floor(Math.random()*23));
+        let dia = (Math.floor(Math.random()*30)+1);
+        let mes = (Math.floor(Math.random()*12)+1);
+        
         x = x + 1;
 
-        handleSimulation(tipo, id, time)
+        handleSimulation(tipo, id, time, user, hora, dia, mes)
       
         event.preventDefault();
 
