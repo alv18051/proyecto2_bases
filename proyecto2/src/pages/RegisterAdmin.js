@@ -15,6 +15,7 @@ const RegisterAdmin = () => {
     const [perfil, setPerfil] = useState('')
     const [tarjeta, setTarjeta] = useState('')
     const [ccv, setCcv] = useState('')
+    const [admin, setAdmin] = useState('')
 
     const handleRegister = (correo, user_name, contrasena,planid,tarjeta,ccv,nombretitular ) => {
         
@@ -72,6 +73,29 @@ const RegisterAdmin = () => {
 
     }
 
+    const handleAdminRegister = (admin_name) => {
+        fetch("http://127.0.0.1:8090/admin_add", {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type' : 'application/json'
+                   },
+                   body: JSON.stringify({
+                        admin_name:admin_name
+                   })
+               })
+               .then(response => response.json())
+               .then(result => {
+                   if(result.success){
+                       console.log("Agregado a los registros")
+                   }else{
+                       alert("Error con la solicitud")
+                   }
+               })
+               .catch(error => {
+                   alert("Ocurrio un error inesperado: " + error)
+               })
+           }
+
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -83,6 +107,11 @@ const RegisterAdmin = () => {
             alert('no coinciden las contraseñas, vuelva a intentarlo')
         }
       };
+
+    const handleAdmin = event =>{
+        event.preventDefault();
+        handleAdminRegister(admin)
+    }
 
     const getNombre = (name) => {
         setNombre(name)
@@ -108,6 +137,10 @@ const RegisterAdmin = () => {
  
     const getCcv = (ccv) => {
         setCcv(ccv)
+    }
+
+    const getAdmin = (admin) => {
+        setAdmin(admin)
     }
 
   
@@ -138,6 +171,7 @@ const RegisterAdmin = () => {
                     <InputComponent getter = {getNombre} title='Nombre'  message='Ingresa tu nombre' />
                     <InputComponent getter = {getTarjeta} title='Tarjeta'  message='Ingresa tu tarjeta (ingresa 0 si eres usuario gratis)' />
                     <InputComponent getter = {getCcv} title='CCV'  message='Ingresa tu CCV (ingresa 0 si eres usuario gratis)' />
+                    <InputComponent getter = {getAdmin} title='Admin name'  message='Ingresa tu username de administrador' />
                     
                     <Button
                             backgroundColor='#400da0'

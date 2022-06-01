@@ -18,7 +18,7 @@ const CardComponent = ({ fun, title, link, image  }) => {
   return (
     <div className='CardCont'>
         <Stack align='center'>
-            <Image className='imgS' borderRadius='10px' boxSize='150px' objectFit='cover' src={image} alt='Foto Veterinaria' />
+            <Image className='imgS' borderRadius='10px' boxSize='150px' objectFit='cover' src={image} alt='Foto' />
             <a className='nombreS' href={link} id="v1" ><b>{title}</b></a>
         </Stack>
 

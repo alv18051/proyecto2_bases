@@ -39,6 +39,7 @@
   const [director, setDirector] = useState('')
   const [categoria, setCategoria] = useState('')
   const [nombre, setNombre] = useState('')
+  const [admin, setAdmin] = useState('')
 
   const getNombre = (name) => {
         setNombre(name)
@@ -62,6 +63,11 @@ const getDirector = (director) => {
 const getCategoria = (categoria) => {
   setCategoria(categoria)
 }
+
+const getAdmin = (admin) => {
+  setAdmin(admin)
+}
+
 const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) => {
  fetch("http://127.0.0.1:8090/add_new_serie", {
             method: 'POST',
@@ -90,7 +96,7 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
         })
     }
 
-    const handleSimulation = (tipo_de_contenido, id_contenido, tiempo_visto) => {
+    const handleSimulation = (tipo_de_contenido, id_contenido, tiempo_visto, id_usuario, hora_visto, dia_mes, mes) => {
       fetch("http://127.0.0.1:8090/simulacion", {
                  method: 'POST',
                  headers: {
@@ -99,13 +105,17 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
                  body: JSON.stringify({
                      tipo_de_contenido:tipo_de_contenido,
                      id_contenido:id_contenido,
-                     tiempo_visto:tiempo_visto
+                     tiempo_visto:tiempo_visto,
+                     id_usuario:id_usuario,
+                     hora_visto:hora_visto,
+                     dia_mes:dia_mes,
+                     mes:mes
                  })
              })
              .then(response => response.json())
              .then(result => {
                  if(result.success){
-                     alert("Simulacion completada")
+                     console.log("Simulacion completada")
                  }else{
                      alert("Error con la solicitud")
                  }
@@ -140,6 +150,53 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
     
   }
 
+  const handleAdminRegister = (admin_name) => {
+    fetch("http://127.0.0.1:8090/admin_add", {
+               method: 'POST',
+               headers: {
+                   'Content-Type' : 'application/json'
+               },
+               body: JSON.stringify({
+                    admin_name:admin_name
+               })
+           })
+           .then(response => response.json())
+           .then(result => {
+               if(result.success){
+                   console.log("Agregado a los registros")
+               }else{
+                   alert("Error con la solicitud")
+               }
+           })
+           .catch(error => {
+               alert("Ocurrio un error inesperado: " + error)
+           })
+       }
+
+
+       const handleAdminRegister2 = (admin_name) => {
+        fetch("http://127.0.0.1:8090/admin_del", {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type' : 'application/json'
+                   },
+                   body: JSON.stringify({
+                        admin_name:admin_name
+                   })
+               })
+               .then(response => response.json())
+               .then(result => {
+                   if(result.success){
+                       console.log("Agregado a los registros")
+                   }else{
+                       alert("Error con la solicitud")
+                   }
+               })
+               .catch(error => {
+                   alert("Ocurrio un error inesperado: " + error)
+               })
+           }
+
 
 
     const target = event => {
@@ -165,22 +222,42 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
       event.preventDefault();
     }
 
+
+    const handleAdmin = event =>{
+      event.preventDefault();
+      handleAdminRegister(admin)
+  }
+
+  const handleAdmin2 = event =>{
+    event.preventDefault();
+    handleAdminRegister2(admin)
+}
+
     const simulacion = event => {
-      let tiempo = 10;
+      let tiempo = 60;
       let x = 0;
       while (x < tiempo){
 
-        let tipo = (Math.floor(Math.random()*2)+1)
-        let id = (Math.floor(Math.random()*50)+1)
-        let time = (Math.floor(Math.random()*40)+1)
+        let tipo = (Math.floor(Math.random()*2)+1);
+        let id = (Math.floor(Math.random()*50)+1);
+        let time = (Math.floor(Math.random()*40)+1);
+        let user = (Math.floor(Math.random()*50)+1);
+        let hora = (Math.floor(Math.random()*23));
+        let dia = (Math.floor(Math.random()*30)+1);
+        let mes = (Math.floor(Math.random()*12)+1);
+        
         x = x + 1;
 
-        handleSimulation(tipo, id, time)
+        handleSimulation(tipo, id, time, user, hora, dia, mes)
       
         event.preventDefault();
 
       }
       
+    }
+
+    const reporteria = event => {
+      window.open('http://127.0.0.1:8090/registro_admins')
     }
    
      return (
@@ -198,6 +275,7 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
             <div className='SearchOuterContainer2'>
 
             <InputComponent getter = {getNombre} title='Eliminar Serie'  message='Ingresa el nombre de la serie que desea eliminar' />
+            <InputComponent getter = {getAdmin} title='Admin username'  message='Ingresa tu username de administrador' />
                 
             <Button type='submit' 
               backgroundColor='#400da0'
@@ -210,6 +288,20 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
             </div>
           </form>
 
+          <form onSubmit={reporteria}>
+              <div className='SearchOuterContainer2'>
+                <Button type='submit' 
+                backgroundColor='#400da0'
+                _hover='rgb(174 213 142)'
+                _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
+                color='#fff'
+                width='100%'
+                marginTop='10px'   
+                >Reporte modificacion admins</Button>
+              </div>
+
+            </form>
+
           
           <form onSubmit={add}>
           <div className='SearchOuterContainer2'>
@@ -220,6 +312,7 @@ const handleAddMovie = (nombre, categoria, director, actorestrella, link, img) =
           <InputComponent getter = {getCategoria} title=''  message='Ingresa el id de la categoria' />
           <InputComponent getter = {getLink} title=''  message='Ingresa el link' />
           <InputComponent getter = {getImg} title=''  message='Ingresa el link de la imagen' />
+          <InputComponent getter = {getAdmin} title='Admin username'  message='Ingresa tu username de administrador' />
 
             
             <Button type='submit' 

@@ -40,6 +40,7 @@
   const [categoria, setCategoria] = useState('')
   const [nombre, setNombre] = useState('')
   const [tipo, setTipo] = useState('')
+  const [admin, setAdmin] = useState('')
 
   const getNombre = (name) => {
         setNombre(name)
@@ -66,6 +67,10 @@ const getDirector = (director) => {
 
 const getCategoria = (categoria) => {
   setCategoria(categoria)
+}
+
+const getAdmin = (admin) => {
+  setAdmin(admin)
 }
 const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorestrella, link, img) => {
  fetch("http://127.0.0.1:8090/add_new_movie", {
@@ -151,6 +156,52 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
            })
        }
 
+       const handleAdminRegister = (admin_name) => {
+        fetch("http://127.0.0.1:8090/admin_add", {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type' : 'application/json'
+                   },
+                   body: JSON.stringify({
+                        admin_name:admin_name
+                   })
+               })
+               .then(response => response.json())
+               .then(result => {
+                   if(result.success){
+                       console.log("Agregado a los registros")
+                   }else{
+                       alert("Error con la solicitud")
+                   }
+               })
+               .catch(error => {
+                   alert("Ocurrio un error inesperado: " + error)
+               })
+           }
+
+      const handleAdminRegister2 = (admin_name) => {
+        fetch("http://127.0.0.1:8090/admin_del", {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type' : 'application/json'
+                   },
+                   body: JSON.stringify({
+                        admin_name:admin_name
+                   })
+               })
+               .then(response => response.json())
+               .then(result => {
+                   if(result.success){
+                       console.log("Agregado a los registros")
+                   }else{
+                       alert("Error con la solicitud")
+                   }
+               })
+               .catch(error => {
+                   alert("Ocurrio un error inesperado: " + error)
+               })
+           }
+
 
 
     const target = event => {
@@ -176,6 +227,20 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
       
       event.preventDefault();
     }
+
+    const handleAdmin = event =>{
+      event.preventDefault();
+      handleAdminRegister(admin)
+  }
+
+  const handleAdmin2 = event =>{
+    event.preventDefault();
+    handleAdminRegister2(admin)
+}
+
+const reporteria = event => {
+  window.open('http://127.0.0.1:8090/registro_admins')
+}
 
     const simulacion = event => {
       let tiempo = 60;
@@ -215,6 +280,7 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
             <div className='SearchOuterContainer2'>
 
             <InputComponent getter = {getNombre} title='Eliminar pelicula'  message='Ingresa el nombre de la pelicula que desea eliminar' />
+            <InputComponent getter = {getAdmin} title='Admin username'  message='Ingresa tu username de administrador' />
                 
             <Button type='submit' 
               backgroundColor='#400da0'
@@ -227,7 +293,21 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
             </div>
           </form>
 
-          <form onSubmit={simulacion}>
+          <form onSubmit={reporteria}>
+              <div className='SearchOuterContainer2'>
+                <Button type='submit' 
+                backgroundColor='#400da0'
+                _hover='rgb(174 213 142)'
+                _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
+                color='#fff'
+                width='100%'
+                marginTop='10px'   
+                >Reporte modificacion admins</Button>
+              </div>
+
+            </form>
+
+            <form onSubmit={simulacion}>
               <div className='SearchOuterContainer2'>
                 <Button type='submit' 
                 backgroundColor='#400da0'
@@ -252,6 +332,8 @@ const handleAddMovie = (idcontenido, tipo, nombre, categoria, director, actorest
           <InputComponent getter = {getLink} title=''  message='Ingresa el link' />
           <InputComponent getter = {getImg} title=''  message='Ingresa el link de la imagen' />
           <InputComponent getter = {getTipo} title=''  message='Ingresa el id del genero' />
+
+          <InputComponent getter = {getAdmin} title='Admin username'  message='Ingresa tu username de administrador' />
 
             
             <Button type='submit' 

@@ -338,6 +338,60 @@ app.post("/simulacion", (req, res) => {
     })
 })
 
+app.post("/admin_add", (req, res) => {
+    console.log("AGREGAR ")
+
+    const sql = `
+        INSERT INTO registro_admins( admin_name, registro)
+        VALUES('${req.body.admin_name}','cre');
+
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        (row) ? res.json({success: true}) : res.json({success: false})
+    })
+})
+
+app.post("/admin_del", (req, res) => {
+    console.log("ELIMINAR")
+
+    const sql = `
+        INSERT INTO registro_admins( admin_name, registro)
+        VALUES('${req.body.admin_name}','del');
+
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        (row) ? res.json({success: true}) : res.json({success: false})
+    })
+})
+
+app.post("/admin_mod", (req, res) => {
+    console.log("MODIFICAR")
+
+    const sql = `
+        INSERT INTO registro_admins( admin_name, registro)
+        VALUES('${req.body.admin_name}','mod');
+
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        (row) ? res.json({success: true}) : res.json({success: false})
+    })
+})
+
+app.get("/registro_admins", (req, res) => {
+    //console.log("\nPELICULAS Y SERIES")
+    const sql = `
+            SELECT * FROM vista_registros 
+        `
+    //console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row.rowCount)
+        res.json(row.rows)
+    })
+})
+
 
 
 
