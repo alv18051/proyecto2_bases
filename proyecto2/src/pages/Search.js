@@ -37,6 +37,8 @@
   const [genero, setGenero] = useState('')
   const [nombre, setNombre] = useState('')
 
+  const [termino, setTermino] = useState('')
+
   const getNombre = (name) => {
         setNombre(name)
     }
@@ -47,6 +49,19 @@
       //& Rating: ${Rating} & Cantidad: ${Cantidad} `);
       alert(posts)
       event.preventDefault();
+    }
+
+
+
+    function busqueda() {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ termino: termino })
+      };
+      fetch('http://127.0.0.1:8090/search_add', requestOptions)
     }
    
      return (
@@ -114,9 +129,9 @@
             </div>
             </form>
 
-            <form onSubmit={target}>
+            <form onSubmit={busqueda}>
             <div className='SearchOuterContainer2'>
-            <InputComponent getter = {getNombre} title='Nombre de la pelicula'  message='Ingresa el nombre de la pelicula' />
+            <Input onChange={event => setTermino(event.currentTarget.value)}   getter = {getNombre} title='Nombre de la pelicula'  message='Ingresa el nombre de la pelicula' />
             <Button type='submit' 
               backgroundColor='#400da0'
               _hover='rgb(174 213 142)'
