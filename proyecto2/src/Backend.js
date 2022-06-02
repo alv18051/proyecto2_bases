@@ -257,6 +257,19 @@ app.get("/start_searchS", (req, res) => {
     })
 })
 
+app.post("/search_add", (req, res) => {
+    console.log("AGREGAR TERMINO")
+
+    const sql = `
+        INSERT INTO searches
+        VALUES('${req.body.termino}');
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        (row) ? res.json({success: true}) : res.json({success: false})
+    })
+})
+
 /*
 -------------------------------------------------------------------------------------------------
 Funciones de admin
@@ -404,16 +417,15 @@ app.get("/top20", (req, res) => {
     })
 })
 
-app.post("/search_add", (req, res) => {
-    console.log("AGREGAR TERMINO")
-
+app.get("/top5seacrhes", (req, res) => {
+    //console.log("\nPELICULAS Y SERIES")
     const sql = `
-        INSERT INTO searches
-        VALUES('${req.body.termino}');
-    `
-    console.log(sql)
+            SELECT * FROM top5seacrhes
+        `
+    //console.log(sql)
     db.query(sql, (err, row) => {
-        (row) ? res.json({success: true}) : res.json({success: false})
+        //console.log(row.rowCount)
+        res.json(row.rows)
     })
 })
 

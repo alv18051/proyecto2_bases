@@ -1,7 +1,6 @@
 /**#######################################################################################
  * Universidad del Valle de Guatemala
  * Departamento de Ciencias de la Computación
-
  * Diego Ruiz
  * Javier Alvarez
  #######################################################################################*/
