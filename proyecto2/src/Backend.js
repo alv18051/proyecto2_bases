@@ -404,6 +404,19 @@ app.get("/top20", (req, res) => {
     })
 })
 
+app.post("/search_add", (req, res) => {
+    console.log("AGREGAR TERMINO")
+
+    const sql = `
+        INSERT INTO searches
+        VALUES('${req.body.termino}');
+    `
+    console.log(sql)
+    db.query(sql, (err, row) => {
+        (row) ? res.json({success: true}) : res.json({success: false})
+    })
+})
+
 
 
 
