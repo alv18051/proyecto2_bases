@@ -392,6 +392,20 @@ app.get("/registro_admins", (req, res) => {
     })
 })
 
+app.get("/top20", (req, res) => {
+    //console.log("\nPELICULAS Y SERIES")
+    const sql = `
+            SELECT * FROM top20peliculas_no_terminadas 
+        `
+    //console.log(sql)
+    db.query(sql, (err, row) => {
+        //console.log(row.rowCount)
+        res.json(row.rows)
+    })
+})
+
+
+
 
 
 

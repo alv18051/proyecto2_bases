@@ -242,6 +242,10 @@ const reporteria = event => {
   window.open('http://127.0.0.1:8090/registro_admins')
 }
 
+const reporteria2 = event => {
+  window.open('http://127.0.0.1:8090/top20')
+}
+
     const simulacion = event => {
       let tiempo = 60;
       let x = 0;
@@ -303,6 +307,20 @@ const reporteria = event => {
                 width='100%'
                 marginTop='10px'   
                 >Reporte modificacion admins</Button>
+              </div>
+
+            </form>
+
+            <form onSubmit={reporteria2}>
+              <div className='SearchOuterContainer2'>
+                <Button type='submit' 
+                backgroundColor='#400da0'
+                _hover='rgb(174 213 142)'
+                _active={{bg:'rgb(174 213 142)', borderColor:'rgb(75, 11, 134)'}}
+                color='#fff'
+                width='100%'
+                marginTop='10px'   
+                >Reporte top 20</Button>
               </div>
 
             </form>
